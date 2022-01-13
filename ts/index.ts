@@ -1,6 +1,7 @@
 import { calculateTotal, cart } from './cart.js';
 const payButton = document.getElementById('pay-button');
 
+// with this method you can use any card like visa or mastercard
 const basicCard: PaymentMethodData = {
   supportedMethods: 'basic-card',
 };
@@ -17,6 +18,17 @@ const samsungPay: PaymentMethodData = {
   },
 };
 
+const applePay: PaymentMethodData = {
+  supportedMethods: 'https://apple.com/apple-pay',
+  data: {
+    version: '',
+    merchantIdentifier: '',
+    merchantCapabilities: '',
+    supportedNetworks: ['mastercard', 'visa'],
+    countryCode: '',
+  },
+};
+
 const paymentDetails: PaymentDetailsInit = {
   id: 'item',
   displayItems: cart,
@@ -30,7 +42,7 @@ const onClick = async () => {
   }
 
   const paymentRequest = new PaymentRequest(
-    [basicCard, samsungPay],
+    [basicCard, samsungPay, applePay],
     paymentDetails
   );
   const canMakePayment = await paymentRequest.canMakePayment();

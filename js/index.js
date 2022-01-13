@@ -23,6 +23,16 @@ const samsungPay = {
         merchantGatewayParameter: { userId: 'acct_17irF7F6yPzJ7wOR' },
     },
 };
+const applePay = {
+    supportedMethods: 'https://apple.com/apple-pay',
+    data: {
+        version: '',
+        merchantIdentifier: '',
+        merchantCapabilities: '',
+        supportedNetworks: ['mastercard', 'visa'],
+        countryCode: '',
+    },
+};
 const paymentDetails = {
     id: 'item',
     displayItems: cart,
@@ -33,7 +43,7 @@ const onClick = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log('Payment Request API doesn`t suppurted');
         return;
     }
-    const paymentRequest = new PaymentRequest([basicCard, samsungPay], paymentDetails);
+    const paymentRequest = new PaymentRequest([basicCard, samsungPay, applePay], paymentDetails);
     const canMakePayment = yield paymentRequest.canMakePayment();
     if (!canMakePayment) {
         console.log('Can`t make payment with this methods');
@@ -41,7 +51,6 @@ const onClick = () => __awaiter(void 0, void 0, void 0, function* () {
     }
     const paymentResponse = yield paymentRequest.show();
     console.log(paymentResponse);
-    // validate paymentResponse on your server
     const validationResult = true;
     if (validationResult) {
         paymentResponse.complete('success');
