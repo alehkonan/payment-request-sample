@@ -29,6 +29,35 @@ const applePay: PaymentMethodData = {
   },
 };
 
+const googlePay: PaymentMethodData = {
+  supportedMethods: 'https://google.com/pay',
+  data: {
+    environment: 'TEST',
+    apiVersion: 2,
+    apiVersionMinor: 0,
+    merchantInfo: {
+      merchantId: '12345678901234567890', // is available after approval by Google.
+      merchantName: 'Example Merchant',
+    },
+    allowedPaymentMethods: [
+      {
+        type: 'CARD',
+        parameters: {
+          allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+          allowedCardNetworks: ['MASTERCARD', 'VISA'],
+        },
+        tokenizationSpecification: {
+          type: 'PAYMENT_GATEWAY',
+          parameters: {
+            gateway: 'example',
+            gatewayMerchantId: 'exampleGatewayMerchantId',
+          },
+        },
+      },
+    ],
+  },
+};
+
 const paymentDetails: PaymentDetailsInit = {
   id: 'item',
   displayItems: cart,
@@ -42,7 +71,7 @@ const onClick = async () => {
   }
 
   const paymentRequest = new PaymentRequest(
-    [basicCard, samsungPay, applePay],
+    [basicCard, samsungPay, applePay, googlePay],
     paymentDetails
   );
   const canMakePayment = await paymentRequest.canMakePayment();

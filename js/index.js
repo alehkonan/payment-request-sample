@@ -33,6 +33,34 @@ const applePay = {
         countryCode: '',
     },
 };
+const googlePay = {
+    supportedMethods: 'https://google.com/pay',
+    data: {
+        environment: 'TEST',
+        apiVersion: 2,
+        apiVersionMinor: 0,
+        merchantInfo: {
+            merchantId: '12345678901234567890',
+            merchantName: 'Example Merchant',
+        },
+        allowedPaymentMethods: [
+            {
+                type: 'CARD',
+                parameters: {
+                    allowedAuthMethods: ['PAN_ONLY', 'CRYPTOGRAM_3DS'],
+                    allowedCardNetworks: ['MASTERCARD', 'VISA'],
+                },
+                tokenizationSpecification: {
+                    type: 'PAYMENT_GATEWAY',
+                    parameters: {
+                        gateway: 'example',
+                        gatewayMerchantId: 'exampleGatewayMerchantId',
+                    },
+                },
+            },
+        ],
+    },
+};
 const paymentDetails = {
     id: 'item',
     displayItems: cart,
@@ -43,7 +71,7 @@ const onClick = () => __awaiter(void 0, void 0, void 0, function* () {
         console.log('Payment Request API doesn`t suppurted');
         return;
     }
-    const paymentRequest = new PaymentRequest([basicCard, samsungPay, applePay], paymentDetails);
+    const paymentRequest = new PaymentRequest([basicCard, samsungPay, applePay, googlePay], paymentDetails);
     const canMakePayment = yield paymentRequest.canMakePayment();
     if (!canMakePayment) {
         console.log('Can`t make payment with this methods');
