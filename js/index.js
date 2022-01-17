@@ -11,6 +11,10 @@ import { calculateTotal, cart } from './cart.js';
 const payButton = document.getElementById('pay-button');
 const basicCard = {
     supportedMethods: 'basic-card',
+    data: {
+        supportedNetworks: ['visa', 'mastercard'],
+        supportedTypes: ['debit', 'credit'],
+    },
 };
 const samsungPay = {
     supportedMethods: 'https://spay.samsung.com',
@@ -26,11 +30,13 @@ const samsungPay = {
 const applePay = {
     supportedMethods: 'https://apple.com/apple-pay',
     data: {
-        version: '',
-        merchantIdentifier: '',
-        merchantCapabilities: '',
+        version: 3,
+        merchantIdentifier: 'merchant.com.example',
+        merchantCapabilities: ['supports3DS'],
         supportedNetworks: ['mastercard', 'visa'],
-        countryCode: '',
+        countryCode: 'US',
+        requiredBillingContactFields: ['postalAddress', 'name', 'phoneticName'],
+        requiredShippingContactFields: ['postalAddress', 'name', 'phone', 'email'],
     },
 };
 const googlePay = {

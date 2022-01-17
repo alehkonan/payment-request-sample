@@ -2,8 +2,13 @@ import { calculateTotal, cart } from './cart.js';
 const payButton = document.getElementById('pay-button');
 
 // with this method you can use any card like visa or mastercard
+// but it will be depricated in the near future
 const basicCard: PaymentMethodData = {
   supportedMethods: 'basic-card',
+  data: {
+    supportedNetworks: ['visa', 'mastercard'],
+    supportedTypes: ['debit', 'credit'],
+  },
 };
 
 const samsungPay: PaymentMethodData = {
@@ -21,11 +26,13 @@ const samsungPay: PaymentMethodData = {
 const applePay: PaymentMethodData = {
   supportedMethods: 'https://apple.com/apple-pay',
   data: {
-    version: '',
-    merchantIdentifier: '',
-    merchantCapabilities: '',
-    supportedNetworks: ['mastercard', 'visa'],
-    countryCode: '',
+    version: 3, // required
+    merchantIdentifier: 'merchant.com.example', // required
+    merchantCapabilities: ['supports3DS'], // required
+    supportedNetworks: ['mastercard', 'visa'], // required
+    countryCode: 'US', // required
+    requiredBillingContactFields: ['postalAddress', 'name', 'phoneticName'],
+    requiredShippingContactFields: ['postalAddress', 'name', 'phone', 'email'],
   },
 };
 
